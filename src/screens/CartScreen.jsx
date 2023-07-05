@@ -1,29 +1,36 @@
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
+  Alert,
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-
-import { CART } from "../data/cart";
-import CartItem from "../components/CartItem/Index";
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { remove_item, confirm_cart } from "../store/actions/cart.action";
+import CartItem from "../components/CartItem/Index";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
-  const item = useSelector((state) => state.cart.items);
+  const items = useSelector((state) => state.cart.items);
   const total = useSelector((state) => state.cart.total);
 
   const handleDeleteItem = (id) => {
-    console.log(id);
     dispatch(remove_item(id));
   };
 
   const handleConfirmCart = () => {
-    dispatch(confirm_cart(item, total));
+    if (items.length > 0) {
+      dispatch(confirm_cart(items, total));
+
+      Alert.alert("Orden confirmada", "¡La orden ha sido confirmada!");
+    } else {
+      Alert.alert(
+        "Carrito vacío",
+        "No hay elementos en el carrito para confirmar la orden."
+      );
+    }
   };
 
   const renderCartItem = ({ item }) => (
@@ -34,19 +41,16 @@ const CartScreen = () => {
     <View style={styles.container}>
       <View style={styles.list}>
         <FlatList
-          data={item}
+          data={items}
           keyExtractor={(item) => item.id}
           renderItem={renderCartItem}
         />
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.confirm}
-          onPress={() => console.log("first")}
-        >
-          <Text>Confirmar</Text>
+        <TouchableOpacity style={styles.confirm} onPress={handleConfirmCart}>
+          <Text style={styles.confirmText}>Confirmar</Text>
           <View>
-            <Text style={styles.priceText}>Total: {total} </Text>
+            <Text style={styles.priceText}>Total: {total}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -54,14 +58,11 @@ const CartScreen = () => {
   );
 };
 
-export default CartScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 12,
     backgroundColor: "#fff",
-    //paddingBottom: 120
   },
   list: {
     flex: 3,
@@ -80,7 +81,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  confirmText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   priceText: {
     fontSize: 18,
+    fontWeight: "bold",
   },
 });
+
+export default CartScreen;

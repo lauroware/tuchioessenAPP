@@ -1,6 +1,7 @@
-import { URL_API } from "../../constants/database.js";
+import { URL_API } from "../../constants/database";
 
-export const ERS = "GET_ORDERS";
+export const GET_ORDERS = "GET_ORDERS";
+export const REMOVE_ORDER = "REMOVE_ORDER";
 
 export const getOrders = () => {
   return async (dispatch) => {
@@ -19,6 +20,23 @@ export const getOrders = () => {
       }));
       console.log(orders);
       dispatch({ type: GET_ORDERS, payload: orders });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const removeOrder = (orderId) => {
+  return async (dispatch) => {
+    try {
+      await fetch(`${URL_API}/ordenes/${orderId}.json`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      dispatch({ type: REMOVE_ORDER, payload: orderId });
     } catch (error) {
       console.log(error);
     }

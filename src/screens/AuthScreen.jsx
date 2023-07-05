@@ -84,7 +84,6 @@ const AuthScreen = () => {
         signIn(formState.inputValues.email, formState.inputValues.password)
       ).then((success) => {
         if (success) {
-          // Navegar a la pantalla de inicio
         }
       });
     } else {

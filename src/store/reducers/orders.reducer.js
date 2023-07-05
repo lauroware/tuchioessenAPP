@@ -8,6 +8,11 @@ const OrdersReducer = (state = initial_state, action) => {
   switch (action.type) {
     case GET_ORDERS:
       return { ...state, list: action.payload };
+    case REMOVE_ORDER:
+      return {
+        ...state,
+        list: state.list.filter((order) => order.id !== action.payload),
+      };
     default:
       return state;
   }
