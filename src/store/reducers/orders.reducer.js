@@ -1,4 +1,5 @@
 import { GET_ORDERS } from "../actions/orders.action";
+import { REMOVE_ORDER } from "../actions/orders.action";
 
 const initial_state = {
   list: [],

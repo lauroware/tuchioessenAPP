@@ -29,13 +29,16 @@ export const getOrders = () => {
 export const removeOrder = (orderId) => {
   return async (dispatch) => {
     try {
-      await fetch(`${URL_API}/ordenes/${orderId}.json`, {
+      // Realiza la lógica para eliminar la orden con el orderId proporcionado
+      // por ejemplo, puedes hacer una solicitud DELETE a la API
+      await fetch(`${URL_API}/ordenes/${orderId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
+      // Despacha la acción REMOVE_ORDER con el orderId como carga útil
       dispatch({ type: REMOVE_ORDER, payload: orderId });
     } catch (error) {
       console.log(error);
