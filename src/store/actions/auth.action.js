@@ -1,7 +1,7 @@
 import { URL_AUTH_SIGNUP, URL_AUTH_SIGNIN } from "../../constants/database";
 
 export const SIGNUP = "SIGNUP";
-export const LOGIN = "LOGIN";
+export const SIGNIN = "SIGNIN";
 
 export const signUp = (email, password) => {
   console.log(email, password);
@@ -49,7 +49,7 @@ export const signIn = (email, password) => {
       const data = await response.json();
       console.log(data);
       dispatch({
-        type: LOGIN,
+        type: SIGNIN,
         token: data.idToken,
         userId: data.localId,
       });

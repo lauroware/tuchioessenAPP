@@ -13,7 +13,6 @@ import {
   View,
 } from "react-native";
 import { useDispatch } from "react-redux";
-
 import Input from "../components/Input";
 import donut from "../assets/foto1.jpg";
 import { signUp, signIn } from "../store/actions/auth.action";
@@ -86,12 +85,6 @@ const AuthScreen = () => {
       ).then((success) => {
         if (success) {
           // Navegar a la pantalla de inicio
-        } else {
-          Alert.alert(
-            "Error de inicio de sesión",
-            "Verifica tus credenciales e intenta nuevamente",
-            [{ text: "Ok" }]
-          );
         }
       });
     } else {
